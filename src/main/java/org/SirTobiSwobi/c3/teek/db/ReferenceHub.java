@@ -1,5 +1,7 @@
 package org.SirTobiSwobi.c3.teek.db;
 
+import org.SirTobiSwobi.c3.teek.core.Suggestor;
+
 public class ReferenceHub {
 	private CategoryManager categoryManager;
 	private DocumentManager documentManager;
@@ -10,6 +12,7 @@ public class ReferenceHub {
 	private WordEmbeddingManager wordEmbeddingManager;
 	private FileSystemManager fileSystemManager;
 	private WordEmbedding activeWordEmbedding;
+	private Suggestor suggestor;
 	
 	public ReferenceHub(CategoryManager categoryManager, DocumentManager documentManager,
 			ConfigurationManager configurationManager, ModelManager modelManager, 
@@ -24,6 +27,7 @@ public class ReferenceHub {
 		this.wordEmbeddingManager = wordEmbeddingManager;
 		this.fileSystemManager = new FileSystemManager();
 		this.activeWordEmbedding = null;
+		this.suggestor = new Suggestor(this);
 	}
 	public CategoryManager getCategoryManager() {
 		return categoryManager;
@@ -79,10 +83,10 @@ public class ReferenceHub {
 	public void setActiveWordEmbedding(WordEmbedding activeWordEmbedding) {
 		this.activeWordEmbedding = activeWordEmbedding;
 	}
-	
-	
-	
-	
-	
-	
+	public Suggestor getSuggestor() {
+		return suggestor;
+	}
+	public void setSuggestor(Suggestor suggestor) {
+		this.suggestor = suggestor;
+	}
 }
