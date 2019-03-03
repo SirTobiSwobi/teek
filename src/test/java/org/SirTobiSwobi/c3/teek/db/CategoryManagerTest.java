@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import org.SirTobiSwobi.c3.teek.db.Category;
 import org.SirTobiSwobi.c3.teek.db.CategoryManager;
-import org.SirTobiSwobi.c3.teek.db.EvalCategory;
 import org.SirTobiSwobi.c3.teek.db.RelationshipType;
 import org.junit.Test;
 
@@ -72,12 +71,6 @@ public class CategoryManagerTest {
 		
 		catMan.deleteCategory(0);
 		assertTrue("Relationship 1 and 8 shoudl be gone but are still there",catMan.getRelationshipByAddress(1)==null&&catMan.getRelationshipByAddress(8)==null);
-		
-		EvalCategory evalCat = new EvalCategory(1000, "Eval Cat Label", "Eval Cat description. (It's no evil cat ;-))");
-		evalCat.setTP(5);
-		catMan.setCategory(evalCat);
-		EvalCategory newCat = (EvalCategory) catMan.getByAddress(1000);
-		assertTrue("Category 1000 is an evalCat and has TP=5", newCat.getId()==1000&&newCat.getTP()==5);
 		
 		
 	}

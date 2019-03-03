@@ -19,9 +19,7 @@ import org.SirTobiSwobi.c3.teek.api.TCRelationships;
 import org.SirTobiSwobi.c3.teek.api.TCSvmModel;
 import org.SirTobiSwobi.c3.teek.api.TCSvmNode;
 import org.SirTobiSwobi.c3.teek.api.TCWordEmbedding;
-import org.SirTobiSwobi.c3.teek.core.Trainer;
 import org.SirTobiSwobi.c3.teek.core.Utilities;
-import org.SirTobiSwobi.c3.teek.db.EvaluationManager;
 import org.SirTobiSwobi.c3.teek.db.Model;
 import org.SirTobiSwobi.c3.teek.db.ModelManager;
 import org.SirTobiSwobi.c3.teek.db.ReferenceHub;
@@ -33,12 +31,10 @@ import org.SirTobiSwobi.c3.teek.db.Relationship;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ModelsResource {
 	private ReferenceHub refHub;
-	private Trainer trainer;
-
-	public ModelsResource(ReferenceHub refHub, Trainer trainer) {
+	
+	public ModelsResource(ReferenceHub refHub) {
 		super();
 		this.refHub = refHub;
-		this.trainer = trainer;
 	}
 	
 	@GET
@@ -78,11 +74,12 @@ public class ModelsResource {
 			return response;
 		}
 		else{
-			//Spawn training progress
+			//No need to spawn training progress. Model simply encapsulates the configuration
 			if(!refHub.getModelManager().isTrainingInProgress()){
 				long modId=refHub.getModelManager().addModelWithoutId(conf);
+				refHub.getModelManager().getModelByAddress(modId).setProgress(1.0);
 				TCProgress progress = new TCProgress("/models/"+modId,.0);
-				trainer.startTraining(conf, modId);
+				//trainer.startTraining(conf, modId);
 				Response response = Response.ok(progress).build();
 				return response;
 			}else{
@@ -100,8 +97,6 @@ public class ModelsResource {
 	public Response deleteAllModels(){
 		refHub.setModelManager(new ModelManager());
 		refHub.getModelManager().setRefHub(refHub);
-		refHub.setEvaluationManager(new EvaluationManager());
-		refHub.getEvaluationManager().setRefHub(refHub);
 		Response response = Response.ok().build();
 		return response;
 	}

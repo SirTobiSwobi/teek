@@ -57,7 +57,6 @@ public class ModelResource {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
 		refHub.getModelManager().deleteModel(mod);
-		refHub.getEvaluationManager().deleteTrainingSession(mod);
 		Response response = Response.ok().build();
 		return response;
 	}
@@ -79,22 +78,7 @@ public class ModelResource {
 		long wordEmbeddingId = refHub.getConfigurationManager().getByAddress(configId).getWordEmbeddingId();
 		String wordEmbeddingLocalFilePath = refHub.getWordEmbeddingManager().getByAddress(wordEmbeddingId).getLocalFilePath();
 		Configuration conf = model.getConfiguration();
-		String selectionPolicy="MicroaverageF1";
-		if(conf.getSelectionPolicy()==SelectionPolicy.MacroaverageF1){
-			selectionPolicy="MicroaverageF1";
-		}else if(conf.getSelectionPolicy()==SelectionPolicy.MicroaveragePrecision){
-			selectionPolicy="MicroaveragePrecision";
-		}else if(conf.getSelectionPolicy()==SelectionPolicy.MicroaverageRecall){
-			selectionPolicy="MicroaverageRecall";
-		}else if(conf.getSelectionPolicy()==SelectionPolicy.MacroaverageF1){
-			selectionPolicy="MacroaverageF1";
-		}else if(conf.getSelectionPolicy()==SelectionPolicy.MacroaveragePrecision){
-			selectionPolicy="MacroaveragePrecision";
-		}else if(conf.getSelectionPolicy()==SelectionPolicy.MacroaverageRecall){
-			selectionPolicy="MacroaverageRecall";
-		}
-		TCConfiguration configuration = new TCConfiguration(conf.getId(), conf.getFolds(), conf.isIncludeImplicits(), conf.getAssignmentThreshold(),
-				selectionPolicy, conf.getAlgorithm(), conf.getDistanceMeasure(), conf.getWordEmbeddingId(), conf.getApd() );
+		TCConfiguration configuration = new TCConfiguration(conf.getId(), conf.getAlgorithm(), conf.getWordEmbeddingId());
 		TCModel output = new TCModel(model.getId(), model.getConfiguration().getId(), model.getProgress(), model.getTrainingLog(), configuration, wordEmbeddingLocalFilePath);
 		return output;
 	}

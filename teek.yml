@@ -57,7 +57,7 @@ configuration: Will be the concatenation of other actual config parameters.
 configOptions: tbd.
 archetype: Classifier Trainer
 runType:  trainer
-debugExamples: false
+debugExamples: true
 #Jersey client settings
 jerseyClient:
   #The maximum idle time for a connection

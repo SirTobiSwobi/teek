@@ -84,22 +84,7 @@ public class ActiveModelResource {
 				//WordEmbedding wordEmbedding = WordEmbedding.buildFromLocalFile(retrievedModel.getWordEmbedding());
 				
 				TCConfiguration configuration = retrievedModel.getConfiguration();
-				SelectionPolicy selectionPolicy = SelectionPolicy.MicroaverageF1;
-				if(configuration.getSelectionPolicy().equals("MicroaverageF1")){
-					selectionPolicy=SelectionPolicy.MicroaverageF1;
-				}else if(configuration.getSelectionPolicy().equals("MicroaveragePrecision")){
-					selectionPolicy=SelectionPolicy.MicroaveragePrecision;
-				}else if(configuration.getSelectionPolicy().equals("MicroaverageRecall")){
-					selectionPolicy=SelectionPolicy.MicroaverageRecall;
-				}else if(configuration.getSelectionPolicy().equals("MacroaverageF1")){
-					selectionPolicy=SelectionPolicy.MacroaverageF1;
-				}else if(configuration.getSelectionPolicy().equals("MacroaveragePrecision")){
-					selectionPolicy=SelectionPolicy.MacroaveragePrecision;
-				}else if(configuration.getSelectionPolicy().equals("MacroaverageRecall")){
-					selectionPolicy=SelectionPolicy.MacroaverageRecall;
-				}
-				Configuration conf = new Configuration(configuration.getId(), configuration.getFolds(), configuration.isIncludeImplicits(), configuration.getAssignmentThreshold(),
-						selectionPolicy, configuration.getAlgorithm(), configuration.getDistanceMeasure(), configuration.getWordEmbeddingId(), configuration.getApd());
+				Configuration conf = new Configuration(configuration.getId(), configuration.getAlgorithm(), configuration.getWordEmbeddingId());
 				
 				Model activeModel = new Model(retrievedModel.getId(), 
 												conf, 
@@ -134,22 +119,7 @@ public class ActiveModelResource {
 			
 
 			TCConfiguration configuration = model.getConfiguration();
-			SelectionPolicy selectionPolicy = SelectionPolicy.MicroaverageF1;
-			if(configuration.getSelectionPolicy().equals("MicroaverageF1")){
-				selectionPolicy=SelectionPolicy.MicroaverageF1;
-			}else if(configuration.getSelectionPolicy().equals("MicroaveragePrecision")){
-				selectionPolicy=SelectionPolicy.MicroaveragePrecision;
-			}else if(configuration.getSelectionPolicy().equals("MicroaverageRecall")){
-				selectionPolicy=SelectionPolicy.MicroaverageRecall;
-			}else if(configuration.getSelectionPolicy().equals("MacroaverageF1")){
-				selectionPolicy=SelectionPolicy.MacroaverageF1;
-			}else if(configuration.getSelectionPolicy().equals("MacroaveragePrecision")){
-				selectionPolicy=SelectionPolicy.MacroaveragePrecision;
-			}else if(configuration.getSelectionPolicy().equals("MacroaverageRecall")){
-				selectionPolicy=SelectionPolicy.MacroaverageRecall;
-			}
-			Configuration conf = new Configuration(configuration.getId(), configuration.getFolds(), configuration.isIncludeImplicits(), configuration.getAssignmentThreshold(),
-					selectionPolicy, configuration.getAlgorithm(), configuration.getDistanceMeasure(), configuration.getWordEmbeddingId(), configuration.getApd());
+			Configuration conf = new Configuration(configuration.getId(), configuration.getAlgorithm(), configuration.getWordEmbeddingId());
 			
 			Model activeModel = new Model(model.getId(), 
 											conf, 

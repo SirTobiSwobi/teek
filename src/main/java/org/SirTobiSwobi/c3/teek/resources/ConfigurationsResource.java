@@ -40,30 +40,10 @@ public class ConfigurationsResource {
 			Configuration[] confArray=refHub.getConfigurationManager().getConfigurationArray();
 			TCConfiguration[] outputArray = new TCConfiguration[confArray.length];
 			for(int i=0; i<confArray.length;i++){
-				String selectionPolicy="MicroaverageF1";
-				if(confArray[i].getSelectionPolicy()==SelectionPolicy.MacroaverageF1){
-					selectionPolicy="MicroaverageF1";
-				}else if(confArray[i].getSelectionPolicy()==SelectionPolicy.MicroaveragePrecision){
-					selectionPolicy="MicroaveragePrecision";
-				}else if(confArray[i].getSelectionPolicy()==SelectionPolicy.MicroaverageRecall){
-					selectionPolicy="MicroaverageRecall";
-				}else if(confArray[i].getSelectionPolicy()==SelectionPolicy.MacroaverageF1){
-					selectionPolicy="MacroaverageF1";
-				}else if(confArray[i].getSelectionPolicy()==SelectionPolicy.MacroaveragePrecision){
-					selectionPolicy="MacroaveragePrecision";
-				}else if(confArray[i].getSelectionPolicy()==SelectionPolicy.MacroaverageRecall){
-					selectionPolicy="MacroaverageRecall";
-				}
 				
 				outputArray[i]=new TCConfiguration(confArray[i].getId(),
-						confArray[i].getFolds(),
-						confArray[i].isIncludeImplicits(), 
-						confArray[i].getAssignmentThreshold(),
-						selectionPolicy,
 						confArray[i].getAlgorithm(),
-						confArray[i].getDistanceMeasure(),
-						confArray[i].getWordEmbeddingId(),
-						confArray[i].getApd()
+						confArray[i].getWordEmbeddingId()
 						);
 			}
 			TCConfigurations output = new TCConfigurations(outputArray);
@@ -81,41 +61,17 @@ public class ConfigurationsResource {
 		else if(configurations.getConfigurations().length>0){
 			for(int i=0; i<configurations.getConfigurations().length; i++){
 				TCConfiguration conf=configurations.getConfigurations()[i];
-				SelectionPolicy selectionPolicy = SelectionPolicy.MicroaverageF1;
-				if(conf.getSelectionPolicy().equals("MicroaverageF1")){
-					selectionPolicy=SelectionPolicy.MicroaverageF1;
-				}else if(conf.getSelectionPolicy().equals("MicroaveragePrecision")){
-					selectionPolicy=SelectionPolicy.MicroaveragePrecision;
-				}else if(conf.getSelectionPolicy().equals("MicroaverageRecall")){
-					selectionPolicy=SelectionPolicy.MicroaverageRecall;
-				}else if(conf.getSelectionPolicy().equals("MacroaverageF1")){
-					selectionPolicy=SelectionPolicy.MacroaverageF1;
-				}else if(conf.getSelectionPolicy().equals("MacroaveragePrecision")){
-					selectionPolicy=SelectionPolicy.MacroaveragePrecision;
-				}else if(conf.getSelectionPolicy().equals("MacroaverageRecall")){
-					selectionPolicy=SelectionPolicy.MacroaverageRecall;
-				}
+				
 				if(conf.getId()>=0){
 					
 					Configuration config = new Configuration(conf.getId(), 
-															conf.getFolds(), 
-															conf.isIncludeImplicits(), 
-															conf.getAssignmentThreshold(),
-															selectionPolicy,
 															conf.getAlgorithm(),
-															conf.getDistanceMeasure(),
-															conf.getWordEmbeddingId(),
-															conf.getApd());
+															conf.getWordEmbeddingId()
+															);
 					refHub.getConfigurationManager().setConfiguration(config);
 				}else{			
-					refHub.getConfigurationManager().addConfigurationWithoutId(conf.getFolds(), 
-																				conf.isIncludeImplicits(), 
-																				conf.getAssignmentThreshold(), 
-																				selectionPolicy,
-																				conf.getAlgorithm(),
-																				conf.getDistanceMeasure(),
-																				conf.getWordEmbeddingId(),
-																				conf.getApd());
+					refHub.getConfigurationManager().addConfigurationWithoutId(conf.getAlgorithm(),
+																				conf.getWordEmbeddingId());
 				}
 			}
 		}

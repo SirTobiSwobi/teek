@@ -9,3 +9,4 @@ Or you can just run the Docker container including everything necessary.
 Version change log:
 
 - 0.0.1: building system from ntfc v1.1.1 implementing classifier-trainer API v 1.0.8
+- 0.0.2: built trainer to simply encapsulate the configuration within the model. No need to spawn threads for that.

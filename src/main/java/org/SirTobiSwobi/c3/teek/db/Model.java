@@ -78,14 +78,6 @@ public class Model {
 		this.progress=(double)completed/(double)steps;
 	}
 
-	public boolean isIncludeImplicits() {
-		return configuration.isIncludeImplicits();
-	}
-
-	public void setIncludeImplicits(boolean includeImplicits) {
-		configuration.setIncludeImplicits(includeImplicits);
-	}
-
 	public String getWordEmbedding() {
 		return wordEmbedding;
 	}

@@ -3,7 +3,6 @@ package org.SirTobiSwobi.c3.teek.core;
 import java.util.ArrayList;
 
 import org.SirTobiSwobi.c3.teek.api.TCSvmNode;
-import org.SirTobiSwobi.c3.teek.db.Assignment;
 
 
 public class Utilities {
@@ -25,18 +24,6 @@ public class Utilities {
 		if(array!=null){
 			for(int i=0;i<array.length;i++){
 				if(array[i]==value){
-					isIn=true;
-				}
-			}
-		}
-		return isIn;
-	}
-	
-	public static boolean isIn(Assignment[] array, Assignment value){
-		boolean isIn=false;
-		if(array!=null){
-			for(int i=0;i<array.length;i++){
-				if(array[i].getId()==value.getId()&&array[i].getDocumentId()==value.getDocumentId()&&array[i].getCategoryId()==value.getCategoryId()){
 					isIn=true;
 				}
 			}
@@ -99,38 +86,6 @@ public class Utilities {
 			b = increaseAndAddValueIfNotIn(a[i],b);
 		}
 		return b;
-	}
-	
-	public static Assignment[] arrayUnionWithoutDuplicates(Assignment[] a, Assignment[] b){
-		if(a==null){
-			return b;
-		}
-		if(b==null){
-			return a;
-		}
-		for(int i=0;i<a.length;i++){
-			b = increaseAndAddValueIfNotIn(a[i],b);
-		}
-		return b;
-	}
-	
-	public static Assignment[] increaseAndAddValueIfNotIn(Assignment value, Assignment[] array){
-		if(array==null){ //if the array does not exist, nothing can be in it
-			array = new Assignment[1];
-			array[0] = value;
-			return array;
-		}
-		if(!isIn(array, value)){
-			Assignment[] newArray = new Assignment[array.length+1];
-			for(int i=0; i<array.length;i++){
-				newArray[i]=array[i];
-			}
-			newArray[array.length]=value;
-			return newArray;
-			
-		}else{
-			return array;
-		}
 	}
 	
 	public static int indexOf(long[] array, long element){

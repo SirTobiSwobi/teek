@@ -67,7 +67,7 @@ public class RelationshipsResource {
 	@Path("/ancestors/{ofId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAncestorsOf(@PathParam("ofId") long ofId){
-		long[] ancestorIds = refHub.getTargetFunctionManager().findAllImplicitCatIds(ofId, SearchDirection.Ascending);
+		long[] ancestorIds = refHub.getCategoryManager().findAllImplicitCatIds(ofId, SearchDirection.Ascending);
 		
 		TCCategory[] tcCategories = new TCCategory[ancestorIds.length];
 		for(int i=0; i<ancestorIds.length; i++){

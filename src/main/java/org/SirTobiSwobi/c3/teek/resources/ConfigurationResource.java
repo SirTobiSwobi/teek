@@ -37,30 +37,11 @@ public class ConfigurationResource {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
 		Configuration configuration = refHub.getConfigurationManager().getByAddress(conf);	
-		String selectionPolicy="MicroaverageF1";
-		if(configuration.getSelectionPolicy()==SelectionPolicy.MacroaverageF1){
-			selectionPolicy="MicroaverageF1";
-		}else if(configuration.getSelectionPolicy()==SelectionPolicy.MicroaveragePrecision){
-			selectionPolicy="MicroaveragePrecision";
-		}else if(configuration.getSelectionPolicy()==SelectionPolicy.MicroaverageRecall){
-			selectionPolicy="MicroaverageRecall";
-		}else if(configuration.getSelectionPolicy()==SelectionPolicy.MacroaverageF1){
-			selectionPolicy="MacroaverageF1";
-		}else if(configuration.getSelectionPolicy()==SelectionPolicy.MacroaveragePrecision){
-			selectionPolicy="MacroaveragePrecision";
-		}else if(configuration.getSelectionPolicy()==SelectionPolicy.MacroaverageRecall){
-			selectionPolicy="MacroaverageRecall";
-		}
+		
 		TCConfiguration output = new TCConfiguration(
 						configuration.getId(),
-						configuration.getFolds(),
-						configuration.isIncludeImplicits(), 
-						configuration.getAssignmentThreshold(),
-						selectionPolicy,
 						configuration.getAlgorithm(),
-						configuration.getDistanceMeasure(),
-						configuration.getWordEmbeddingId(),
-						configuration.getApd()
+						configuration.getWordEmbeddingId()
 						);	
 		return Response.ok(output).build();
 		
@@ -72,31 +53,11 @@ public class ConfigurationResource {
 			Response response = Response.status(400).build();
 			return response;
 		}
-		SelectionPolicy selectionPolicy = SelectionPolicy.MicroaverageF1;
-		if(configuration.getSelectionPolicy().equals("MicroaverageF1")){
-			selectionPolicy=SelectionPolicy.MicroaverageF1;
-		}else if(configuration.getSelectionPolicy().equals("MicroaveragePrecision")){
-			selectionPolicy=SelectionPolicy.MicroaveragePrecision;
-		}else if(configuration.getSelectionPolicy().equals("MicroaverageRecall")){
-			selectionPolicy=SelectionPolicy.MicroaverageRecall;
-		}else if(configuration.getSelectionPolicy().equals("MacroaverageF1")){
-			selectionPolicy=SelectionPolicy.MacroaverageF1;
-		}else if(configuration.getSelectionPolicy().equals("MacroaveragePrecision")){
-			selectionPolicy=SelectionPolicy.MacroaveragePrecision;
-		}else if(configuration.getSelectionPolicy().equals("MacroaverageRecall")){
-			selectionPolicy=SelectionPolicy.MacroaverageRecall;
-		}
 		
 		refHub.getConfigurationManager().setConfiguration(
 				new Configuration(configuration.getId(),
-								configuration.getFolds(),
-								configuration.isIncludeImplicits(),
-								configuration.getAssignmentThreshold(),
-								selectionPolicy,
 								configuration.getAlgorithm(),
-								configuration.getDistanceMeasure(),
-								configuration.getWordEmbeddingId(),
-								configuration.getApd()));
+								configuration.getWordEmbeddingId()));
 		Response response = Response.ok().build();
 		return response;
 	}

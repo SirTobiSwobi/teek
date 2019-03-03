@@ -2,6 +2,8 @@ package org.SirTobiSwobi.c3.teek.db;
 
 import java.util.ArrayList;
 
+import org.SirTobiSwobi.c3.teek.core.Utilities;
+
 public class CategoryManager {
 	
 	private AVLTree<Category> categories;
@@ -200,5 +202,36 @@ public class CategoryManager {
 		return result;
 	}
 
+	public long[] findAllImplicitCatIds(long catId, SearchDirection direction){
+		Relationship[] relationships = getRelationshipArray();
+		ArrayList<long[]> edges = new ArrayList<long[]>();
+		for(int i=0; i<relationships.length; i++){
+			if(relationships[i].getType().equals(RelationshipType.Sub)){
+				long[] edge = new long[2];
+				if(direction.equals(SearchDirection.Ascending)){
+					edge[0] = relationships[i].getTo().getId();
+					edge[1] = relationships[i].getFrom().getId();
+				}else if(direction.equals(SearchDirection.Descending)){
+					edge[0] = relationships[i].getFrom().getId();
+					edge[1] = relationships[i].getTo().getId();
+				}
+				edges.add(edge);
+			}else if(relationships[i].getType().equals(RelationshipType.Equality)){
+				long[] edge = new long[2];
+				edge[0] = relationships[i].getTo().getId();
+				edge[1] = relationships[i].getFrom().getId();
+				edges.add(edge);
+				edge[0] = relationships[i].getFrom().getId();
+				edge[1] = relationships[i].getTo().getId();
+				edges.add(edge);
+			}
+		}
+		long[][] edgeArray = new long[edges.size()][2];
+		for(int i=0; i<edges.size();i++){
+			edgeArray[i][0]=edges.get(i)[0];
+			edgeArray[i][1]=edges.get(i)[1];
+		}
+		return Utilities.BFSreachable(edgeArray, catId);
+	}
 
 }

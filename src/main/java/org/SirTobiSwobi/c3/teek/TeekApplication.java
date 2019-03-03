@@ -14,46 +14,36 @@ import org.SirTobiSwobi.c3.teek.api.TCModel;
 import org.SirTobiSwobi.c3.teek.api.TCSvmModel;
 import org.SirTobiSwobi.c3.teek.api.TCSvmNode;
 import org.SirTobiSwobi.c3.teek.api.TCWordEmbedding;
-import org.SirTobiSwobi.c3.teek.core.Classifier;
-import org.SirTobiSwobi.c3.teek.core.Trainer;
 import org.SirTobiSwobi.c3.teek.core.Utilities;
-import org.SirTobiSwobi.c3.teek.db.CategorizationManager;
 import org.SirTobiSwobi.c3.teek.db.Category;
 import org.SirTobiSwobi.c3.teek.db.CategoryManager;
 import org.SirTobiSwobi.c3.teek.db.Configuration;
 import org.SirTobiSwobi.c3.teek.db.ConfigurationManager;
 import org.SirTobiSwobi.c3.teek.db.Document;
 import org.SirTobiSwobi.c3.teek.db.DocumentManager;
-import org.SirTobiSwobi.c3.teek.db.EvaluationManager;
 import org.SirTobiSwobi.c3.teek.db.MlrType;
 import org.SirTobiSwobi.c3.teek.db.Model;
 import org.SirTobiSwobi.c3.teek.db.ModelManager;
 import org.SirTobiSwobi.c3.teek.db.ReferenceHub;
 import org.SirTobiSwobi.c3.teek.db.RelationshipType;
 import org.SirTobiSwobi.c3.teek.db.SelectionPolicy;
-import org.SirTobiSwobi.c3.teek.db.TargetFunctionManager;
 import org.SirTobiSwobi.c3.teek.db.WordEmbedding;
 import org.SirTobiSwobi.c3.teek.db.WordEmbeddingManager;
 import org.SirTobiSwobi.c3.teek.db.WordEmbeddingMetadata;
 import org.SirTobiSwobi.c3.teek.health.ConfigHealthCheck;
 import org.SirTobiSwobi.c3.teek.resources.ActiveModelResource;
-import org.SirTobiSwobi.c3.teek.resources.AssignmentResource;
 import org.SirTobiSwobi.c3.teek.resources.CategoriesResource;
-import org.SirTobiSwobi.c3.teek.resources.CategorizationsResource;
 import org.SirTobiSwobi.c3.teek.resources.CategoryResource;
 import org.SirTobiSwobi.c3.teek.resources.ConfigurationResource;
 import org.SirTobiSwobi.c3.teek.resources.ConfigurationsResource;
 import org.SirTobiSwobi.c3.teek.resources.DocumentResource;
 import org.SirTobiSwobi.c3.teek.resources.DocumentsResource;
-import org.SirTobiSwobi.c3.teek.resources.EvaluationsResource;
 import org.SirTobiSwobi.c3.teek.resources.MetadataResource;
 import org.SirTobiSwobi.c3.teek.resources.ModelResource;
 import org.SirTobiSwobi.c3.teek.resources.ModelsResource;
 import org.SirTobiSwobi.c3.teek.resources.RelationshipResource;
 import org.SirTobiSwobi.c3.teek.resources.RelationshipsResource;
 import org.SirTobiSwobi.c3.teek.resources.RetrainingResource;
-import org.SirTobiSwobi.c3.teek.resources.TargetFunctionResource;
-import org.SirTobiSwobi.c3.teek.resources.TrainingSessionResource;
 import org.SirTobiSwobi.c3.teek.resources.WordEmbeddingResource;
 import org.SirTobiSwobi.c3.teek.resources.WordEmbeddingsResource;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -83,26 +73,14 @@ public class TeekApplication extends Application<TeekConfiguration> {
 		
 		DocumentManager docMan = new DocumentManager();
 		CategoryManager catMan = new CategoryManager(); 
-		TargetFunctionManager tfMan = new TargetFunctionManager();
 		ConfigurationManager confMan = new ConfigurationManager();
 		ModelManager modMan = new ModelManager();
-		CategorizationManager cznMan = new CategorizationManager();
-		EvaluationManager evalMan = new EvaluationManager();
 		Model activeModel = null;
 		WordEmbeddingManager weMan = new WordEmbeddingManager();
-		ReferenceHub refHub = new ReferenceHub(catMan, docMan, tfMan, confMan, modMan, cznMan, evalMan, activeModel, weMan);
-		tfMan.setRefHub(refHub);
-		cznMan.setRefHub(refHub);
-		evalMan.setRefHub(refHub);
+		ReferenceHub refHub = new ReferenceHub(catMan, docMan, confMan, modMan, activeModel, weMan);
 		modMan.setRefHub(refHub);
 		weMan.setRefHub(refHub);
 		
-		/*
-		 * Initializing trainer and classifier (for also implementing the athlete API)
-		 */
-		
-		Trainer trainer = new Trainer(refHub);
-		Classifier classifier = new Classifier(refHub);
 		
 		/*
 		 * Initializing HTTP client
@@ -122,29 +100,21 @@ public class TeekApplication extends Application<TeekConfiguration> {
 		final RelationshipsResource relationships = new RelationshipsResource(refHub);
 		final RelationshipResource relationship = new RelationshipResource(refHub);
 		final ActiveModelResource activeModelResource = new ActiveModelResource(refHub, client);
-		final CategorizationsResource categorizations = new CategorizationsResource(refHub, client, classifier);
 		final RetrainingResource retraining = new RetrainingResource(refHub);
 		
 		if(configuration.getRunType().equals("trainer")){
-			final TargetFunctionResource targetFunction = new TargetFunctionResource(refHub);
-			final AssignmentResource assignment = new AssignmentResource(refHub);
 			final ConfigurationsResource configurations = new ConfigurationsResource(refHub);
 			final ConfigurationResource configurationR = new ConfigurationResource(refHub);
-			final ModelsResource models = new ModelsResource(refHub, trainer);
+			final ModelsResource models = new ModelsResource(refHub);
 			final ModelResource model = new ModelResource(refHub);
-			final EvaluationsResource evaluations = new EvaluationsResource(refHub);
-			final TrainingSessionResource trainingSession = new TrainingSessionResource(refHub);
 			final WordEmbeddingsResource wordEmbeddings = new WordEmbeddingsResource(refHub);
 			final WordEmbeddingResource wordEmbedding = new WordEmbeddingResource(refHub);
 			
-			environment.jersey().register(targetFunction);
-			environment.jersey().register(assignment);
+	
 			environment.jersey().register(configurations);
 			environment.jersey().register(configurationR);
 			environment.jersey().register(models);
 			environment.jersey().register(model);
-			environment.jersey().register(evaluations);
-			environment.jersey().register(trainingSession);
 			environment.jersey().register(MultiPartFeature.class);
 			environment.jersey().register(wordEmbeddings);
 			environment.jersey().register(wordEmbedding);
@@ -173,7 +143,6 @@ public class TeekApplication extends Application<TeekConfiguration> {
 		environment.jersey().register(relationships);
 		environment.jersey().register(relationship);
 		environment.jersey().register(activeModelResource);
-		environment.jersey().register(categorizations);
 		environment.jersey().register(retraining);
 		
 		/**
@@ -196,7 +165,7 @@ public class TeekApplication extends Application<TeekConfiguration> {
 				"Skip-Gram", 
 				"/opt/wordembeddings/skip-gram-wiki1stbill.txt");
 		refHub.getWordEmbeddingManager().setWordEmbedding(wordEmbedding); //the actual file must be in the file system!
-		Configuration config = new Configuration(0,1, true, 0.1, SelectionPolicy.MacroaverageF1, "ntfc", "WMD", 1, 1);
+		Configuration config = new Configuration(0, "avsp", 1);
 		refHub.getConfigurationManager().setConfiguration(config);
 		Model model = new Model(0, config, wordEmbedding.getLocalFilePath(), "");
 		refHub.getModelManager().setModel(model);
@@ -264,12 +233,7 @@ public class TeekApplication extends Application<TeekConfiguration> {
 			docMan.setDocument(new Document(2,"Virus diseases document label","third content"));
 			docMan.setDocument(new Document(3,"Keratitis, Dendritic document label","200th content"));
 			docMan.setDocument(new Document(4,"525 document","Melanoma, Experimental and other stuff"));
-			
-			tfMan.setAssignment(0, 0, 4);
-			tfMan.setAssignment(1, 1, 510);
-			tfMan.setAssignment(2, 2, 2);
-			tfMan.setAssignment(3, 3, 450);
-			tfMan.setAssignment(4, 4, 525);
+	
 			
 			
 			
