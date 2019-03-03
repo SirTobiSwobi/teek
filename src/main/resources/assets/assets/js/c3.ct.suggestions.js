@@ -332,62 +332,10 @@
 
 			});
 		
-
 		
-		$("#createForm").hide();
-		$("#uploadForm").hide();
-		$("#deleteConfirm").hide();
-		
-		readCategorizations();
+		readTaxonomy();
 		
 		$("#read").click(function(){
-			location.reload(true);
-		});
-		
-		$("#create").click(function() {
-			$("#list").hide("slow");
-			$("#uploadForm").hide("slow");
-			$("#deleteConfirm").hide("slow");
-			$("#createForm").show("fast");
-		});
-		
-		$("#upload").click(function() {
-			renderDocumentList();
-			$("#list").hide("slow");
-			$("#createForm").hide("slow");
-			$("#deleteConfirm").hide("slow");
-			$("#uploadForm").show("fast");
-		});
-		
-		$("#createF").submit(function( event ) {
-			event.preventDefault();
-			var form = $("#createF").serializeArray();
-			createCategorization(form);
-			location.reload(true);
-		});
-		
-		$("#uploadF").submit(function( event ) {
-			event.preventDefault();
-			var form = $("#uploadF").serializeArray();
-			var docId = form[0].value;
-			categorizeExistingDocument(docId);
-			location.reload(true);
-			
-		});
-		
-		$("#delete").click(function() {
-			$("#list").hide("slow");
-			$("#uploadForm").hide("slow");
-			$("#createForm").hide("slow");
-			$("#deleteConfirm").show("fast");
-		});
-		
-		$("#deleteF").submit(function( event ) {
-			event.preventDefault();
-			var form = $("#deleteF").serializeArray();
-			if(form[0].value=="delete"){
-				deleteCategorizations();
-			}		
 			location.reload(true);
 		});
 	

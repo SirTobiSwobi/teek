@@ -9,7 +9,7 @@
 -->
 <html>
 	<head>
-		<title>C3 No Target Function Classifier (NTFC)</title>
+		<title>C3 Taxonomy Extension system for Emerging Knowledge (TEEK)</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -20,7 +20,7 @@
 		<div id="wrapper">
 			<!-- Header -->
 					<header id="header" class="alt">
-						<a href="index.html" class="logo"><strong>C3 No Target Function Classifier (NTFC)</strong> <span>by Tobias Eljasik-Swoboda</span></a>
+						<a href="index.html" class="logo"><strong>C3 Taxonomy Extension system for Emerging Knowledge (TEEK)</strong> <span>by Tobias Eljasik-Swoboda</span></a>
 						<nav>
 							<a href="#menu">Menu</a>
 						</nav>
@@ -32,14 +32,11 @@
 							<li><a href="documents.html">/documents</a></li>
 							<li><a href="categories.html">/categories</a></li>
 							<li><a href="relationships.html">/relationships</a></li>
-							<li><a href="targetfunction.html">/targetfunction</a></li>
 							<li><a href="configurations.html">/configurations</a></li>
 							<li><a href="models.html">/models</a></li>
-							<li><a href="evaluations.html">/evaluations</a></li>
 							<li><a href="activeModel.html">/model</a></li>
-							<li><a href="categorizations.html">/categorizations</a></li>
-							<li><a href="retraining.html">/retraining</a></li>
 							<li><a href="wordembeddings.html">/wordembeddings</a></li>
+							<li><a href="suggestions.html">/categories/$c/suggestions/$m</a></li>
 						</ul>
 						<ul class="actions stacked">
 							<li><a href="index.html#one" class="button primary fit">Overview</a></li>
@@ -49,13 +46,15 @@
 					<section id="banner" class="major">
 						<div class="inner">
 							<header class="major">
-								<h1>C3 No Target Function Classifier (NTFC)</h1>
+								<h1>C3 Taxonomy Extension system for Emerging Knowledge (TEEK)</h1>
 							</header>
 							<div class="content">
-								<p>This microservice is an implementation of the C3 Classifier-Trainer API. 
-								It uses the Word2Vec-Plus model and builds on it using the unsupervised NTFC classification Algorithm or Dai's algorithm.
-								This means, that it doesn't need a target function. The C3 API endpoints are none the less provided to perform 
-								automated evaluations of the service.</p>
+								<p>This microservice implements a subset of the C3 Classifier-Trainer API. 
+								It uses the Word2Vec-Plus model and builds on it to create suggestions for sub-categories in existing taxonomies.
+								The taxonomies are edited using the /categories and /relationships endpoints. The suggestions are either generated using the 
+								Arithmetic Vector Stream Predictor (AVSP) or the Regression Vector Stream Predictor (RVSP). Which one is used is specified 
+								in the active model which encapsulates configuration objects. The mechanism to generate and edit both is equal to that of 
+								the C3 Classifier-Trainer API. Additional Endpoints under the categories endpoint provide the generated predictions. </p>
 								<ul class="actions">
 									<li><a href="#one" class="button next scrolly">Get Started</a></li>
 								</ul>
@@ -111,16 +110,6 @@
 								</article>
 								<article>
 									<span class="image">
-										<img src="images/pic05.jpg" alt="" />
-									</span>
-									<header class="major">
-										<h3><a href="targetfunction.html" class="link">/targetfunction</a></h3>
-										<p>In Text Categorization, the target function is the manually created definition which document belongs to which category. 
-										The trainer needs this to learn from.</p>
-									</header>
-								</article>
-								<article>
-									<span class="image">
 										<img src="images/pic06.jpg" alt="" />
 									</span>
 									<header class="major">
@@ -141,16 +130,6 @@
 								</article>
 								<article>
 									<span class="image">
-										<img src="images/pic08.jpg" alt="" />
-									</span>
-									<header class="major">
-										<h3><a href="evaluations.html" class="link">/evaluations</a></h3>
-										<p>During every training, a self-evaluation is performed. This measures how well the system performed during training. This endpoint can be used
-										 to choose the appropriate model for a given task.</p>
-									</header>
-								</article>
-								<article>
-									<span class="image">
 										<img src="images/pic09.jpg" alt="" />
 									</span>
 									<header class="major">
@@ -161,21 +140,11 @@
 								</article>
 								<article>
 									<span class="image">
-										<img src="images/pic10.jpg" alt="" />
-									</span>
-									<header class="major">
-										<h3><a href="categorizations.html" class="link">/categorizations</a></h3>
-										<p>This endpoint is used to perform categorizations of previously unknown documents using the active model of the classifier.</p>
-									</header>
-								</article>
-								<article>
-									<span class="image">
 										<img src="images/pic11.jpg" alt="" />
 									</span>
 									<header class="major">
-										<h3><a href="retraining.html" class="link">/retraining</a></h3>
-										<p>If categories and their relationships are changed, training a new model reflecting these changes is advisable.
-										 This endpoint shows wether a retraining is required or not.</p>
+										<h3><a href="suggestions.html" class="link">/categories/$c/suggestions/$m</a></h3>
+										<p>This GUI element can be used to generate suggestions for categories and relationships.</p>
 									</header>
 								</article>
 								<article>
@@ -194,14 +163,11 @@
 							<section id="two">
 								<div class="inner">
 									<header class="major">
-										<h2>Classifier-Trainer</h2>
+										<h2>Taxonomy Extension for Emerging Knowledge</h2>
 									</header>
-									<p>A classifier assigns documents to categories based on their content by employing machine learning. 
-									This service is part of the Classifier Trainer/Athlete pattern developed by Tobias Eljasik-Swoboda. 
-									A Trainer Service uses machine learning to learn from existing document-to-category assignments. After having learned from these examples,
-									an Athlete Service can use these insights to perform classifications. This facilitates Scale-Out.
-									The NTFC is special in that regard because it doesn't need documents to leran from but relys on the representation of reality captured in the employed
-									word embeddings. 
+									<p>This microservice generates suggestions to extend existing taxonomies by employing machine learning. 
+									TEEK heavily relies on provided word embeddings. It generates it's suggestions based on the word embedding. 
+									Different word embeddings generate vastly different results.
 									A Trainer Service always includes an Athlete Service. Each C3 Service is available as JAR file and Docker Container. This makes them runable anywhere.
 									<br/> The service employs multiple endpoints using a REST/JSON API. This is wrapped in the c3.ct.trainer-api.js JavaScripts employed by this web GUI. 
 									</p>
