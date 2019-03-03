@@ -253,7 +253,6 @@ public class WordEmbedding {
 			}
 			if(closestIndex!=-1){
 				closestIndices[i]=closestIndex;
-				System.out.println("Closest Index for "+i+": "+closestIndices[i]+" distance: "+closestDistance);
 			}
 		}
 		for(int i=0; i<n; i++){

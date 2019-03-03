@@ -44,6 +44,7 @@ import org.SirTobiSwobi.c3.teek.resources.ModelsResource;
 import org.SirTobiSwobi.c3.teek.resources.RelationshipResource;
 import org.SirTobiSwobi.c3.teek.resources.RelationshipsResource;
 import org.SirTobiSwobi.c3.teek.resources.RetrainingResource;
+import org.SirTobiSwobi.c3.teek.resources.SuggestionsResource;
 import org.SirTobiSwobi.c3.teek.resources.WordEmbeddingResource;
 import org.SirTobiSwobi.c3.teek.resources.WordEmbeddingsResource;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -109,6 +110,7 @@ public class TeekApplication extends Application<TeekConfiguration> {
 			final ModelResource model = new ModelResource(refHub);
 			final WordEmbeddingsResource wordEmbeddings = new WordEmbeddingsResource(refHub);
 			final WordEmbeddingResource wordEmbedding = new WordEmbeddingResource(refHub);
+			final SuggestionsResource suggestions = new SuggestionsResource(refHub);
 			
 	
 			environment.jersey().register(configurations);
@@ -118,6 +120,7 @@ public class TeekApplication extends Application<TeekConfiguration> {
 			environment.jersey().register(MultiPartFeature.class);
 			environment.jersey().register(wordEmbeddings);
 			environment.jersey().register(wordEmbedding);
+			environment.jersey().register(suggestions);
 			
 			
 		}

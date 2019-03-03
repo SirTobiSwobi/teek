@@ -233,5 +233,13 @@ public class CategoryManager {
 		}
 		return Utilities.BFSreachable(edgeArray, catId);
 	}
+	
+	public long getMaxCatId(){
+		return categories.getMaxId();
+	}
+	
+	public long getMaxRelId(){
+		return relationships.getMaxId();
+	}
 
 }
