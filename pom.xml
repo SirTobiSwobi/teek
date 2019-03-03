@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.SirTobiSwobi.c3</groupId>
   <artifactId>teek</artifactId>
-  <version>0.2.0-SNAPSHOT</version>
+  <version>0.3.0-SNAPSHOT</version>
   <name>teek</name>
   <description>Classifier athlete and trainer microservice implementing the C3 API. Implementation of the TEEK algorithm for taxonomy extension.</description>
   <properties>

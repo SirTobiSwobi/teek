@@ -12,3 +12,4 @@ Version change log:
 - 0.0.2: built trainer to simply encapsulate the configuration within the model. No need to spawn threads for that.
 - 0.1.0: implemented suggestions resource
 - 0.2.0: implemented category suggestions resource. Moved prediction method to core class. 
+- 0.3.0: implemented relationship suggestions resoruce.

@@ -43,6 +43,7 @@ import org.SirTobiSwobi.c3.teek.resources.MetadataResource;
 import org.SirTobiSwobi.c3.teek.resources.ModelResource;
 import org.SirTobiSwobi.c3.teek.resources.ModelsResource;
 import org.SirTobiSwobi.c3.teek.resources.RelationshipResource;
+import org.SirTobiSwobi.c3.teek.resources.RelationshipSuggestionsResource;
 import org.SirTobiSwobi.c3.teek.resources.RelationshipsResource;
 import org.SirTobiSwobi.c3.teek.resources.RetrainingResource;
 import org.SirTobiSwobi.c3.teek.resources.SuggestionsResource;
@@ -113,6 +114,7 @@ public class TeekApplication extends Application<TeekConfiguration> {
 			final WordEmbeddingResource wordEmbedding = new WordEmbeddingResource(refHub);
 			final SuggestionsResource suggestions = new SuggestionsResource(refHub);
 			final CategorySuggestionsResource catSugs = new CategorySuggestionsResource(refHub);
+			final RelationshipSuggestionsResource relSugs = new RelationshipSuggestionsResource(refHub);
 			
 	
 			environment.jersey().register(configurations);
@@ -124,7 +126,7 @@ public class TeekApplication extends Application<TeekConfiguration> {
 			environment.jersey().register(wordEmbedding);
 			environment.jersey().register(suggestions);
 			environment.jersey().register(catSugs);
-			
+			environment.jersey().register(relSugs);
 			
 		}
 	
