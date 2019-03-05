@@ -579,6 +579,42 @@ function generateTaxonomyCategory(categories, descendants, equalities, i, visite
 	}
 	var output = {appendString: appendString, visited: visited};
 	return output;
-	
-	
+}
+
+function renderSuggestionRetrievalForm(ids){
+	$("#amount").empty();
+	$("#catId").empty();
+	$("#amount").val("10");
+	var categoryJSON;
+	var documentJSON;
+	$.getJSON("../categories",function(json){
+		categoryJSON = json;
+	}).done(function(){
+			var appendString = "";					
+			for(var j=0; j< categoryJSON.categories.length; j++){			
+				appendString = appendString +"<option value=\""+categoryJSON.categories[j].id+"\"";
+				if(categoryJSON.categories[j].id==ids.catId){
+					appendString+= " selected";
+				}
+				appendString+=">";
+				appendString = appendString +categoryJSON.categories[j].id+" (";
+				appendString = appendString +categoryJSON.categories[j].label+")</option>";			
+			}
+			$("#catId").append(appendString);			
+		
+	});
+}
+
+function retrieveSuggestions(catId, amount){
+	$("#list").empty();
+	$("#list").append("<h2>Available suggestions:</h2>");
+	$.getJSON("../categories/"+catId+"/suggestions/"+amount,function(json){	
+		if(json.categories==null){
+			$("#list").append("<h3>No suggestions were generated</h3>");
+		}else{
+			for (var i=0; i< json.categories.length; i++){
+				$("#list").append("<li>"+json.categories[i].id+": "+json.categories[i].label+"</li>");
+			}
+		}
+	});
 }
