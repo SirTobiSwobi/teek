@@ -606,15 +606,22 @@ function renderSuggestionRetrievalForm(ids){
 }
 
 function retrieveSuggestions(catId, amount){
-	$("#list").empty();
-	$("#list").append("<h2>Available suggestions:</h2>");
+	$("#suggestions").empty();
+	$("#content").hide();
+	$("#content").empty();
+	$("#suggestions").append("<img src=\"images/loading.svg\" />");
+	$("#suggestions").append("generating suggestions ...");
 	$.getJSON("../categories/"+catId+"/suggestions/"+amount,function(json){	
 		if(json.categories==null){
-			$("#list").append("<h3>No suggestions were generated</h3>");
+			$("#suggestions").append("<h3>No suggestions were generated</h3>");
 		}else{
+			$("#suggestions").empty();
 			for (var i=0; i< json.categories.length; i++){
-				$("#list").append("<li>"+json.categories[i].id+": "+json.categories[i].label+"</li>");
+				$("#suggestions").append("<li>"+json.categories[i].id+": "+json.categories[i].label+"</li>");
 			}
+			var pretty = JSON.stringify(json, undefined, 2);
+			$("#content").val(pretty);
+			$("#content").show();
 		}
 	});
 }
