@@ -13,10 +13,11 @@ public class ReferenceHub {
 	private FileSystemManager fileSystemManager;
 	private WordEmbedding activeWordEmbedding;
 	private Suggestor suggestor;
+	private String wordEmbeddingsLocation;
 	
 	public ReferenceHub(CategoryManager categoryManager, DocumentManager documentManager,
 			ConfigurationManager configurationManager, ModelManager modelManager, 
-			Model activeModel, WordEmbeddingManager wordEmbeddingManager) {
+			Model activeModel, WordEmbeddingManager wordEmbeddingManager, String wordEmbeddingsLocation) {
 		super();
 		this.categoryManager = categoryManager;
 		this.documentManager = documentManager;
@@ -27,6 +28,7 @@ public class ReferenceHub {
 		this.wordEmbeddingManager = wordEmbeddingManager;
 		this.fileSystemManager = new FileSystemManager();
 		this.activeWordEmbedding = null;
+		this.wordEmbeddingsLocation = wordEmbeddingsLocation;
 		this.suggestor = new Suggestor(this);
 	}
 	public CategoryManager getCategoryManager() {
@@ -89,4 +91,11 @@ public class ReferenceHub {
 	public void setSuggestor(Suggestor suggestor) {
 		this.suggestor = suggestor;
 	}
+	public String getWordEmbeddingsLocation() {
+		return wordEmbeddingsLocation;
+	}
+	public void setWordEmbeddingsLocation(String wordEmbeddingsLocation) {
+		this.wordEmbeddingsLocation = wordEmbeddingsLocation;
+	}
+	
 }

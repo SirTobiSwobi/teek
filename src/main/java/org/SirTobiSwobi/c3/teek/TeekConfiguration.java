@@ -32,6 +32,8 @@ public class TeekConfiguration extends Configuration {
 	private String runType;
 	@NotEmpty
 	private String debugExamples;
+	@NotEmpty
+	private String wordEmbeddingsLocation;
 	
 	@Valid
 	@NotNull
@@ -142,5 +144,15 @@ public class TeekConfiguration extends Configuration {
 	    public JerseyClientConfiguration getJerseyClientConfiguration() {
 	        return jerseyClientConfiguration;
 	    }
+	
+	@JsonProperty
+	public String getWordEmbeddingsLocation() {
+		return wordEmbeddingsLocation;
+	}
+
+	@JsonProperty
+	public void setWordEmbeddingsLocation(String wordEmbeddingsLocation) {
+		this.wordEmbeddingsLocation = wordEmbeddingsLocation;
+	}
 	
 }

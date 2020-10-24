@@ -80,7 +80,7 @@ public class TeekApplication extends Application<TeekConfiguration> {
 		ModelManager modMan = new ModelManager();
 		Model activeModel = null;
 		WordEmbeddingManager weMan = new WordEmbeddingManager();
-		ReferenceHub refHub = new ReferenceHub(catMan, docMan, confMan, modMan, activeModel, weMan);
+		ReferenceHub refHub = new ReferenceHub(catMan, docMan, confMan, modMan, activeModel, weMan, configuration.getWordEmbeddingsLocation());
 		modMan.setRefHub(refHub);
 		weMan.setRefHub(refHub);
 		
@@ -171,7 +171,7 @@ public class TeekApplication extends Application<TeekConfiguration> {
 				200, 
 				218317, 
 				"Skip-Gram", 
-				"/opt/wordembeddings/skip-gram-wiki1stbill.txt");
+				refHub.getWordEmbeddingsLocation()+"skip-gram-wiki1stbill.txt");
 		refHub.getWordEmbeddingManager().setWordEmbedding(wordEmbedding); //the actual file must be in the file system!
 		Configuration config = new Configuration(0, "avsp", 1);
 		refHub.getConfigurationManager().setConfiguration(config);

@@ -58,6 +58,7 @@ configOptions: tbd.
 archetype: Classifier Trainer
 runType:  trainer
 debugExamples: true
+wordEmbeddingsLocation: 'C:\\wordembeddings\\' #file system location to store word embeddings. Suggestion for Unix: '/opt/wordembeddings/'
 #Jersey client settings
 jerseyClient:
   #The maximum idle time for a connection

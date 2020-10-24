@@ -120,7 +120,7 @@ public class WordEmbeddingsResource {
         @FormDataParam("keyWords") final String keyWords,
         @FormDataParam("algorithm") final String algorithm,
         @FormDataParam("creationDate") final String creationDate){
-		String fileLocation="/opt/wordembeddings/"+fileDetail.getFileName();
+		String fileLocation=refHub.getWordEmbeddingsLocation()+fileDetail.getFileName();
 		
 		try {
 			refHub.getFileSystemManager().writeToFile(fileInputStream, fileLocation);
